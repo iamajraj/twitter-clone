@@ -19,7 +19,7 @@ export default function Home() {
         <Feed />
 
         {/* Widgets */}
-    
+
         {/* Modal */}
       </main>
     </div>
