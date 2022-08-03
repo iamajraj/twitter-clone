@@ -6,6 +6,7 @@ import {
     ShareIcon,
     TrashIcon,
 } from "@heroicons/react/outline";
+import Moment from "react-moment";
 
 export default function Post({ post }) {
     return (
@@ -13,8 +14,8 @@ export default function Post({ post }) {
             {/* user image */}
             <img
                 className="h-11 w-11 rounded-full object-cover mr-4"
-                src={post.userImg}
-                alt={post.name}
+                src={post.data().userImg}
+                alt={post.data().name}
             />
 
             {/* right side */}
@@ -24,13 +25,15 @@ export default function Post({ post }) {
                     {/* Post user info */}
                     <div className="flex items-center space-x-1 whitespace-nowrap">
                         <h4 className="font-bold text-[15px] sm:text-[16px] hover:underline">
-                            {post.name}
+                            {post.data().name}
                         </h4>
                         <span className="text-sm sm:text-[15px]">
-                            @{post.username} -{" "}
+                            @{post.data().username} -{" "}
                         </span>
                         <span className="text-sm sm:text-[15px] hover:underline">
-                            {post.timestamp}
+                            <Moment fromNow>
+                                {post.data().timestamp?.toDate()}
+                            </Moment>
                         </span>
                     </div>
                     {/* dot icon */}
@@ -40,16 +43,14 @@ export default function Post({ post }) {
                 {/* post text */}
 
                 <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">
-                    {post.text}
+                    {post.data().text}
                 </p>
 
                 {/* post image */}
 
-                <img
-                    className="rounded-2xl mr-2"
-                    src={post.postImg}
-                    alt="post image"
-                />
+                {post.data().image && (
+                    <img className="rounded-2xl mr-2" src={post.data().image} />
+                )}
 
                 {/* icons */}
 
