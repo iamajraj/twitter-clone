@@ -11,6 +11,7 @@ import {
     ClipboardIcon,
     UserIcon,
     DotsHorizontalIcon,
+    LoginIcon,
 } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -52,7 +53,7 @@ export default function Sidebar() {
                         Tweet
                     </button>
                     {/* Mini-Profile */}
-                    <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
+                    <div className="w-full hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
                         <img
                             onClick={signOut}
                             src={session.user.image}
@@ -69,12 +70,20 @@ export default function Sidebar() {
                     </div>
                 </>
             ) : (
-                <button
-                    onClick={signIn}
-                    className="bg-blue-400 text-white w-36 rounded-full h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
-                >
-                    Sign in
-                </button>
+                <>
+                    <button
+                        onClick={signIn}
+                        className="bg-blue-400 text-white w-36 rounded-full h-12 font-bold shadow-md hover:brightness-95 text-lg hidden xl:inline"
+                    >
+                        Sign in
+                    </button>
+                    <div className="hoverEffect text-gray-700 flex items-center justify-center xl:hidden mt-auto">
+                        <LoginIcon
+                            onClick={signIn}
+                            className="h-7 w-7 rounded-full object-cover xl:mr-2"
+                        />
+                    </div>
+                </>
             )}
         </div>
     );
