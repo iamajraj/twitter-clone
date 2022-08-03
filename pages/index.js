@@ -54,7 +54,7 @@ export async function getServerSideProps() {
     return {
         props: {
             newsResults,
-            randomUsersResults,
+            randomUsersResults: randomUsersResults ?? null,
         },
     };
 }

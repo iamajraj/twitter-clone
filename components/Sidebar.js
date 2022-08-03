@@ -18,7 +18,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 export default function Sidebar() {
     const { data: session } = useSession();
     return (
-        <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full">
+        <div className="hidden xl:w-[270px] sm:flex flex-col p-2 xl:items-start fixed h-full">
             {/* Twitter Logo */}
             <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
                 <Image
@@ -57,7 +57,6 @@ export default function Sidebar() {
                         <img
                             onClick={signOut}
                             src={session.user.image}
-                            alt="user profile"
                             className="h-10 w-10 rounded-full object-cover xl:mr-2"
                         />
                         <div className="leading-5 hidden xl:inline">
@@ -66,7 +65,7 @@ export default function Sidebar() {
                                 @{session.user.username}
                             </p>
                         </div>
-                        <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline" />
+                        <DotsHorizontalIcon className="h-5 ml-auto hidden xl:inline" />
                     </div>
                 </>
             ) : (

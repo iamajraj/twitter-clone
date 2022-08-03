@@ -40,7 +40,7 @@ export default function Widgets({ newsResults, randomUsersResults }) {
             <div className="sticky top-16 text-gray-700 space-y-3 bg-gray-100 rounded-xl pt-2 w-[90%] xl:w-[75%]">
                 <h4 className="font-bold text-xl px-4">Who to follows</h4>
                 {randomUsersResults
-                    .slice(0, randomUserNum)
+                    ?.slice(0, randomUserNum)
                     .map((randomUser) => (
                         <div
                             className="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-200"
