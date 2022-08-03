@@ -42,14 +42,15 @@ export async function getServerSideProps() {
             "https://newsapi.org/v2/top-headlines?sources=mashable&apiKey=f0df678708d74cafb2d72fc9882ee497"
         )
     ).json();
-
-    // Who to follow section
-    const randomUsersResults = await (
-        await fetch(
+    let randomUsersResults;
+    try {
+        // Who to follow section
+        randomUsersResults = await fetch(
             "https://randomuser.me/api/?results=30&inc=name,login,picture"
-        )
-    ).json();
-
+        ).then((res) => res.json());
+    } catch (ex) {
+        console.log(ex);
+    }
     return {
         props: {
             newsResults,
