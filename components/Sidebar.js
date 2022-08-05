@@ -55,7 +55,6 @@ export default function Sidebar() {
                     {/* Mini-Profile */}
                     <div className="w-full hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
                         <img
-                            onClick={signOut}
                             src={session.user.image}
                             className="h-10 w-10 rounded-full object-cover xl:mr-2"
                         />
