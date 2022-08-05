@@ -1,24 +1,37 @@
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atom/modalAtom";
+import { useRouter } from "next/router";
 import Modal from "react-modal";
 import {
     XIcon,
-    XCircleIcon,
     PhotographIcon,
     EmojiHappyIcon,
-    DotsHorizontalIcon,
 } from "@heroicons/react/outline";
 import Moment from "react-moment";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
 export default function CommentModal() {
     const [open, setOpen] = useRecoilState(modalState);
     const [post] = useRecoilState(postIdState);
     const [input, setInput] = useState("");
     const { data: session } = useSession();
+    const Router = useRouter();
 
-    const sendComment = async () => {};
+    const sendComment = async () => {
+        await addDoc(collection(db, "posts", post.postId, "comments"), {
+            comment: input,
+            name: session.user.name,
+            username: session.user.username,
+            userImg: session.user.image,
+            timestamp: serverTimestamp(),
+        });
+        setOpen(false);
+        setInput("");
+        Router.push(`/posts/${post.postId}`);
+    };
 
     return (
         <div>
@@ -27,6 +40,7 @@ export default function CommentModal() {
                     className="max-w-lg w-[90%] absolute top-24 left-[50%] translate-x-[-50%] bg-white border-2  border-gray-200 rounded-xl shadow-md outline-none"
                     isOpen={open}
                     onRequestClose={() => setOpen(false)}
+                    appElement={document.getElementsByTagName("body")[0]}
                 >
                     <div className="p-1">
                         <div className="border-b border-gray-200 py-2 px-1.5">
