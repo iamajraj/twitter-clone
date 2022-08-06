@@ -71,8 +71,10 @@ export default function PostPage({ newsResults, randomUsersResults }) {
                         comments.map((comment) => (
                             <Comment
                                 key={comment.id}
-                                id={comment.id}
+                                commentId={comment.id}
+                                originalPostId={id}
                                 comment={comment.data()}
+                                post={post}
                             />
                         ))}
                 </div>
@@ -93,7 +95,7 @@ export default function PostPage({ newsResults, randomUsersResults }) {
 export async function getServerSideProps() {
     const newsResults = await (
         await fetch(
-            "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=f0df678708d74cafb2d72fc9882ee497"
+            "https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json"
         )
     ).json();
     let randomUsersResults;

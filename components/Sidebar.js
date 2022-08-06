@@ -13,14 +13,20 @@ import {
     DotsHorizontalIcon,
     LoginIcon,
 } from "@heroicons/react/outline";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function Sidebar() {
     const { data: session } = useSession();
+    const Router = useRouter();
+
     return (
         <div className="hidden xl:w-[270px] sm:flex flex-col p-2 xl:items-start fixed h-full">
             {/* Twitter Logo */}
-            <div className="hoverEffect p-0 hover:bg-blue-100 xl:px-1">
+            <div
+                onClick={() => Router.push("/")}
+                className="hoverEffect p-0 hover:bg-blue-100 xl:px-1"
+            >
                 <Image
                     width="50"
                     height="50"

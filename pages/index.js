@@ -33,12 +33,12 @@ export default function Home({ newsResults, randomUsersResults }) {
     );
 }
 
-// https://newsapi.org/v2/top-headlines?sources=mashable&apiKey=f0df678708d74cafb2d72fc9882ee497
+// https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=
 
 export async function getServerSideProps() {
     const newsResults = await (
         await fetch(
-            "https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=f0df678708d74cafb2d72fc9882ee497"
+            "https://saurav.tech/NewsAPI/top-headlines/category/technology/in.json"
         )
     ).json();
     let randomUsersResults;
