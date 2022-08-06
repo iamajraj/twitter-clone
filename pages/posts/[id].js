@@ -1,4 +1,4 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import CommentModal from "../../components/CommentModal";
@@ -6,16 +6,40 @@ import Sidebar from "../../components/Sidebar";
 import Widgets from "../../components/Widgets";
 import Post from "../../components/Post";
 import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import {
+    collection,
+    doc,
+    onSnapshot,
+    orderBy,
+    query,
+} from "firebase/firestore";
 import { db } from "../../firebase";
+import Comment from "../../components/Comment";
 
 export default function PostPage({ newsResults, randomUsersResults }) {
     const Router = useRouter();
     const [post, setPost] = useState();
+    const [comments, setComments] = useState([]);
     const { id } = Router.query;
 
+    // get post data
     useEffect(
         () => onSnapshot(doc(db, "posts", id), (snapshot) => setPost(snapshot)),
+        [db, id]
+    );
+
+    // get comments of the post
+    useEffect(
+        () =>
+            onSnapshot(
+                query(
+                    collection(db, "posts", id, "comments"),
+                    orderBy("timestamp", "desc")
+                ),
+                (snapshot) => {
+                    setComments(snapshot.docs);
+                }
+            ),
         [db, id]
     );
 
@@ -36,13 +60,21 @@ export default function PostPage({ newsResults, randomUsersResults }) {
                             onClick={() => Router.push("/")}
                             className="hoverEffect flex items-center justify-center"
                         >
-                            <ChevronLeftIcon className="h-5" />
+                            <ArrowLeftIcon className="h-5" />
                         </div>
                         <h2 className="text-lg sm:text-xl font-bold cursor-pointer">
                             Tweet
                         </h2>
                     </div>
                     <Post id={id} post={post} />
+                    {comments.length > 0 &&
+                        comments.map((comment) => (
+                            <Comment
+                                key={comment.id}
+                                id={comment.id}
+                                comment={comment.data()}
+                            />
+                        ))}
                 </div>
 
                 {/* Widgets */}
